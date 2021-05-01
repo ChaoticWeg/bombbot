@@ -1,0 +1,22 @@
+.navbar.navbar-expand-lg.navbar-dark.bg-dark
+            .container
+                a.navbar-brand(href="/"): i.fas.fa-baseball-ball
+                button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarSupportedContent")
+                    span.navbar-toggler-icon
+
+                .collapse.navbar-collapse#navbarSupportedContent
+                    ul.navbar-nav.mr-auto
+                        li.nav-item: a.nav-link(href="/") Home
+                    ul.navbar-nav.ml-auto
+                        if user
+                            li.nav-item
+                                a.nav-link(href="/me")
+                                    if user.admin 
+                                        i.far.fa-gem
+                                        | &ensp;
+                                    | #{user.displayName}
+                        else
+                            li.nav-item
+                                a.nav-link(href="/auth")
+                                    | Log In&ensp;
+                                    i.fab.fa-discord

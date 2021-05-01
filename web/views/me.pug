@@ -1,0 +1,25 @@
+extends layouts/main
+
+block scripts
+    script.
+        const user = !{JSON.stringify(user)};
+        const bombs = !{JSON.stringify(bombs)};
+
+    script(src="/dist/me.js")
+
+block content
+    h4.pb-3.mb-3.border-bottom
+        span#greeting
+        | , #{user.displayName}!
+
+    .row
+        .col-12.col-lg-8
+            h4 My Bombs
+            include includes/bombTable
+
+        .col-12.col-lg-4
+            h4 Log a Bomb
+            include includes/bombForm
+
+        .col-12.mt-3.pt-3.border-top
+            a.btn.btn-danger(href="/logout") Log Out

@@ -1,0 +1,13 @@
+form#bombForm(action="")
+    .form-group
+        label(for="playerName") Player
+        input.form-control#playerName(type="text" name="playerName" aria-describedby="playerNameHelp")
+        small#playerNameHelp.form-text.text-muted Eventually this will be a searchable dropdown
+    .form-group
+        label(for="playerOvr") OVR
+        input.form-control#playerOvr(type="number" name="playerOvr")
+    .form-group
+        label(for="distance") Distance
+        input.form-control#distance(type="number" name="distance" aria-describedby="distanceHelp")
+        small#distanceHelp.form-text.text-muted (in feet)
+    button.btn.btn-primary(type="submit") Submit

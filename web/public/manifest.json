@@ -1,0 +1,15 @@
+{
+    "name": "BombBot",
+    "short_name": "BombBot",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#222222",
+    "description": "Track your home runs in MLB The Show",
+    "icons": [
+        {
+            "src": "/favicon.png",
+            "sizes": "196x196",
+            "type": "image/png"
+        }
+    ]
+}
