@@ -32,6 +32,34 @@ apiRouter.get("/bombs/:id", (req, res) => {
         });
 });
 
+apiRouter.delete("/bombs/:id", (req, res) => {
+    if (!req.user) {
+        return respondError(res, 401, "Unauthorized");
+    }
+
+    const { id } = req.params;
+    HomeRun.findById(id)
+        .exec()
+        .then((hr) => {
+            if (hr.user && String(hr.user) !== String(req.user._id)) {
+                console.log("HOME RUN", hr.user, "CANNOT BE DELETED BY", req.user._id);
+                return respondError(res, 403, "Cannot delete a bomb that isn't yours");
+            }
+
+            HomeRun.findByIdAndDelete(id)
+                .exec()
+                .then(() => res.status(200).type("json").send({ ok: true }))
+                .catch((err) => respondError(res, 500, err));
+        })
+        .catch((err) => {
+            if (err.kind === "ObjectId") {
+                respondError(res, 400, `Invalid HomeRun id: ${id}`);
+            } else {
+                respondError(res, 500, err);
+            }
+        });
+});
+
 apiRouter.get("/bombs", (req, res) => {
     const { user, limit } = req.query;
 
