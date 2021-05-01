@@ -43,9 +43,9 @@ app.use("/", router);
 // Discord auth
 
 const authOptions = { failureFlash: true, failureRedirect: "/#err" };
-app.get("/auth", passport.authenticate("discord"));
+app.get("/login", passport.authenticate("discord"));
 app.get("/auth/callback", passport.authenticate("discord", authOptions), (_req, res) => res.redirect("/me"));
-app.get("/auth/logout", (req, res) => {
+app.get("/logout", (req, res) => {
     req.logout();
     res.redirect("/");
 });
