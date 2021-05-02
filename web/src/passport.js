@@ -12,15 +12,9 @@ const config = {
 };
 
 function verify(_accessToken, _refreshToken, profile, cb) {
-    const findCondition = { discordId: profile.id };
-    User.findOne(findCondition, (err, findResult) => {
-        // If we had an error or found a user, we're done
-        if (err || findResult) return cb(err, findResult);
-
-        // If no user with that Discord ID, create a new one with the Discord ID and username from the profile
-        const createData = { discordId: profile.id, displayName: profile.username };
-        User.create(createData, (err, createResult) => cb(err, createResult));
-    });
+    User.findByDiscordProfileOrCreate(profile)
+        .then((result) => cb(null, result))
+        .catch((err) => cb(err, null));
 }
 
 const strategy = new DiscordStrategy(config, verify);
@@ -40,7 +34,7 @@ passport._adminOnly = function (req, res, next) {
     }
 
     next();
-}
+};
 
 passport._copyUserToResponse = function (req, res, next) {
     if (req.user) {
@@ -48,16 +42,17 @@ passport._copyUserToResponse = function (req, res, next) {
     }
 
     next();
-}
+};
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-        done(err, user);
-    });
+    User.findById(id)
+        .exec()
+        .then((res) => done(null, res))
+        .catch((err) => done(err, null));
 });
 
 module.exports = passport;
