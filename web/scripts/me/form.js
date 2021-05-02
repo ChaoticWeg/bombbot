@@ -1,6 +1,6 @@
 const $ = require("jquery");
 
-function mapFormData(l, r) {
+function reduceForm(l, r) {
     l[r.name] = r.value;
     return l;
 }
@@ -19,9 +19,9 @@ exports.setupForm = () => {
         e.preventDefault();
 
         let data = $("#bombForm").serializeArray();
-        data = data.reduce(mapFormData, {});
+        data = data.reduce(reduceForm, {});
         data = JSON.stringify(data);
-        
+
         $.ajax({
             data,
             type: "POST",
@@ -30,6 +30,6 @@ exports.setupForm = () => {
             contentType: "application/json",
             success: onSubmitSuccess,
             error: onSubmitError
-        })
+        });
     });
-}
+};

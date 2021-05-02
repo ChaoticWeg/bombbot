@@ -21,7 +21,6 @@ async function fetch() {
 
 function refreshTable() {
     fetch()
-        .then((hrs) => _.sortBy(hrs, (hr) => -hr.distance))
         .then((hrs) => _.map(hrs, (hr, i) => homeRuns.renderOne(hr, i + 1, false)))
         .then(renderAll);
 }

@@ -16,7 +16,6 @@ function checkBombs() {
 
 exports.refreshTable = function refreshTable() {
     checkBombs()
-        .then((hrs) => _.sortBy(hrs, hr => -hr.distance))
         .then((hrs) => _.map(hrs, (hr, i) => homeRuns.renderOne(hr, i + 1, true)))
         .then(renderAll)
         .catch((err) => {

@@ -20,9 +20,7 @@ apiRouter.get("/bombs/:id", (req, res) => {
         return respondError(res, 400, "Missing HomeRun id");
     }
 
-    HomeRun.findById(id)
-        .populate(["user"])
-        .exec()
+    HomeRun.byId(id)
         .then((data) => res.status(200).type("json").send(data))
         .catch((err) => {
             if (err.kind === "ObjectId") {
@@ -39,9 +37,7 @@ apiRouter.delete("/bombs/:id", (req, res) => {
     }
 
     const { id } = req.params;
-    HomeRun.findById(id)
-        .populate(["user"])
-        .exec()
+    HomeRun.byId(id)
         .then((hr) => {
             if (hr.user && hr.user._id && String(hr.user._id) !== String(req.user._id)) {
                 console.log("HOME RUN", hr.user, "CANNOT BE DELETED BY", req.user._id);
@@ -64,18 +60,7 @@ apiRouter.delete("/bombs/:id", (req, res) => {
 
 apiRouter.get("/bombs", (req, res) => {
     const { user, limit } = req.query;
-
-    let mq = HomeRun.find().populate(["user"]);
-
-    if (!_.isEmpty(user)) {
-        mq = mq.where({ user });
-    }
-
-    if (+limit && +limit > 0) {
-        mq = mq.limit(+limit);
-    }
-
-    mq.exec()
+    HomeRun.top(user, limit)
         .then((data) => res.status(200).type("json").send(data))
         .catch((error) => respondError(res, 500, error));
 });
