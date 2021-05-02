@@ -1,7 +1,9 @@
 {
-    "name": "bomb-bot-21",
+    "name": "bombbot-web",
     "version": "1.0.0",
     "main": "index.js",
+    "description": "Web interface for BombBot",
+    "repository": "https://github.com/ChaoticWeg/bombbot",
     "author": "Shawn Lutch <shawn@chaoticweg.cc>",
     "license": "GPL-3.0-or-later",
     "private": true,

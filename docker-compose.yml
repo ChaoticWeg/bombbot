@@ -8,3 +8,10 @@ services:
             - 3000:3000
         env_file:
             - ./secrets.env
+    discord:
+        build: ./discord
+        # restart: unless-stopped
+        env_file:
+            - ./secrets.env
+        links:
+            - 'web'

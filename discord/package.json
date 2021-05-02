@@ -1,0 +1,16 @@
+{
+    "name": "bombbot-discord",
+    "version": "1.0.0",
+    "main": "index.js",
+    "description": "Discord bot interface for BombBot",
+    "repository": "https://github.com/ChaoticWeg/bombbot",
+    "author": "Shawn Lutch <shawn@chaoticweg.cc>",
+    "license": "GPL-3.0-or-later",
+    "private": true,
+    "scripts": {
+        "start": "node ."
+    },
+    "dependencies": {
+        "discord.js": "^12.5.3"
+    }
+}
