@@ -1,7 +1,10 @@
 extends layouts/main
 
 block scripts
+    script.
+        const bombs = !{JSON.stringify(bombs)};
+
     script(src="/dist/index.js")
 
 block content
-    h1 yo
+    include includes/bombTableAll

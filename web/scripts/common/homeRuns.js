@@ -12,6 +12,17 @@ exports.fetchForUser = function fetchForUser(userId, limit = 0) {
     });
 };
 
+exports.fetchAll = function fetchAll(limit = 10) {
+    return new Promise((resolve, reject) => {
+        let url = `/api/bombs`;
+        if (+limit && +limit > 0) {
+            url += `?limit=${limit}`;
+        }
+
+        $.ajax({ url, success: resolve, error: reject });
+    });
+};
+
 function onDeleteClicked(e) {
     const _id = $(this).attr("id");
     const homeRun = _.findWhere(bombs, { _id });
@@ -42,22 +53,29 @@ function onDeleteClicked(e) {
     }
 }
 
-exports.renderOne = function renderHomeRun(homeRun, index = 0) {
+exports.renderOne = function renderHomeRun(homeRun, index = 0, addDeleteButton = false) {
     const row = $("<tr></tr>").attr("id", `bomb-${homeRun._id}`);
 
     const cells = [
         $('<th scope="col"></th>').text(+index || ""),
         $("<td></td>").text(homeRun.distance),
         $("<td></td>").text(homeRun.playerName),
-        $("<td></td>").text(homeRun.playerOvr),
-        $("<td></td>").append(
-            $("<button></button>")
-                .attr("id", `${homeRun._id}`)
-                .attr("class", "btn btn-danger")
-                .on("click", onDeleteClicked)
-                .append($("<i></i>").attr("class", "far fa-trash-alt"))
-        )
+        $("<td></td>").text(homeRun.playerOvr)
     ];
+
+    if (addDeleteButton) {
+        cells.push(
+            $("<td></td>").append(
+                $("<button></button>")
+                    .attr("id", `${homeRun._id}`)
+                    .attr("class", "btn btn-danger")
+                    .on("click", onDeleteClicked)
+                    .append($("<i></i>").attr("class", "far fa-trash-alt"))
+            )
+        );
+    } else {
+        cells.push($("<td></td>").text(homeRun.user.displayName));
+    }
 
     _.each(cells, (c) => row.append(c));
     return row;

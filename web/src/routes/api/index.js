@@ -21,6 +21,7 @@ apiRouter.get("/bombs/:id", (req, res) => {
     }
 
     HomeRun.findById(id)
+        .populate(["user"])
         .exec()
         .then((data) => res.status(200).type("json").send(data))
         .catch((err) => {
@@ -39,9 +40,10 @@ apiRouter.delete("/bombs/:id", (req, res) => {
 
     const { id } = req.params;
     HomeRun.findById(id)
+        .populate(["user"])
         .exec()
         .then((hr) => {
-            if (hr.user && String(hr.user) !== String(req.user._id)) {
+            if (hr.user && hr.user._id && String(hr.user._id) !== String(req.user._id)) {
                 console.log("HOME RUN", hr.user, "CANNOT BE DELETED BY", req.user._id);
                 return respondError(res, 403, "Cannot delete a bomb that isn't yours");
             }
@@ -63,7 +65,7 @@ apiRouter.delete("/bombs/:id", (req, res) => {
 apiRouter.get("/bombs", (req, res) => {
     const { user, limit } = req.query;
 
-    let mq = HomeRun.find({});
+    let mq = HomeRun.find().populate(["user"]);
 
     if (!_.isEmpty(user)) {
         mq = mq.where({ user });

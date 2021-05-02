@@ -16,11 +16,22 @@ router.use("/api", apiRouter);
 // Top-level routes
 
 router.get("/", passport._copyUserToResponse, (_req, res) => {
-    res.render("index");
+    HomeRun.find()
+        .populate(["user"])
+        .limit(10)
+        .exec()
+        .then((bombs) => {
+            res.render("index", { bombs });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.render("index");
+        });
 });
 
 router.get("/me", passport._private, passport._copyUserToResponse, (req, res) => {
     HomeRun.find()
+        .populate(["user"])
         .where({ user: req.user._id })
         .limit(10)
         .exec()
