@@ -83,6 +83,26 @@ apiRouter.post("/bombs", (req, res) => {
         }
     }
 
+    if (!+playerOvr) {
+        return respondError(res, 400, "Player OVR must be a number");
+    }
+
+    if (!+distance) {
+        return respondError(res, 400, "Distance must be a number");
+    }
+
+    if (+playerOvr < 0 || +playerOvr > 99) {
+        return respondError(res, 400, `Player OVR out of range (${playerOvr}). Must be in range: [0, 99]`);
+    }
+
+    if (+distance < 400) {
+        return respondError(res, 400, `Distance (${distance}) must be >= 400 feet to be a true bomb`);
+    }
+
+    if (+distance > 600) {
+        return respondError(res, 400, `Distance (${distance}) is a little too outrageous to be believable, eh?`);
+    }
+
     User.findOne({ discordId })
         .limit(1)
         .exec()
