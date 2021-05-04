@@ -1,4 +1,4 @@
-table.table#bombTable
+table.table.table-striped#bombTable
     thead
         tr
             th(scope="col") #
@@ -7,3 +7,10 @@ table.table#bombTable
             th(scope="col") OVR
             th(scope="col") User
     tbody
+        each bomb, index in bombs
+            tr
+                th(scope="col")= index + 1
+                td= bomb.distance
+                td= bomb.playerName
+                td= bomb.playerOvr
+                td= bomb.user.displayName

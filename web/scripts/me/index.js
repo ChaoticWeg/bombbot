@@ -1,9 +1,9 @@
 const {setGreeting} = require("./greeting");
 const {setupForm} = require("./form");
-const {refreshTable} = require("./table");
+const {setupOnDeleteEvents} = require("./deleteButtons");
 
 $(() => {
     setGreeting();
     setupForm();
-    refreshTable();
+    setupOnDeleteEvents();
 });

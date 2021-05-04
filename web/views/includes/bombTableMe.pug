@@ -5,5 +5,14 @@ table.table#bombTable
             th(scope="col") Distance
             th(scope="col") Player
             th(scope="col") OVR
-            th(scope="col")
+            th(scope="col") Actions
     tbody
+        each bomb, index in bombs
+            tr
+                th(scope="col")= index + 1
+                td= bomb.distance
+                td= bomb.playerName
+                td= bomb.playerOvr
+                td
+                    button.btn.btn-danger.btn-delete-bomb(id=bomb._id)
+                        i.far.fa-trash-alt

@@ -8,18 +8,22 @@ block scripts
     script(src="/dist/me.js")
 
 block content
-    h4.pb-3.mb-3.border-bottom
+    h3.pb-3.mb-3.border-bottom
         span#greeting
         | , #{user.displayName}!
+        span.ml-2
+            button.btn.btn-link#editProfile
+                i.far.fa-edit
+                span.sr-only Edit Profile
 
     .row
-        .col-12.col-lg-8
+        .col-12.col-lg-8.mb-3
             h4 My Bombs
             include includes/bombTableMe
 
-        .col-12.col-lg-4
+        .col-12.col-lg-4.mb-3
             h4 Log a Bomb
             include includes/bombForm
 
-        .col-12.mt-3.pt-3.border-top
+        .col-12.mb-3.pt-3.border-top
             a.btn.btn-danger(href="/logout") Log Out
