@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    discordId: String,
-    displayName: String,
+    discordId: { type: String, required: "Must be linked to a Discord ID" },
+    displayName: { type: String, minLength: 2, maxLength: 32, required: "Must have a display name" },
     admin: { type: Boolean, default: false }
 });
 
