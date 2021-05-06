@@ -24,7 +24,7 @@ const homeRunSchema = new mongoose.Schema(
 );
 
 homeRunSchema.statics.top = async function (user, limit) {
-    let findQuery = this.find().sort("-distance -playerOvr");
+    let findQuery = this.find().sort("-distance -playerOvr").select("-__v");
 
     if (user) {
         findQuery = findQuery.where({ user });
@@ -34,11 +34,11 @@ homeRunSchema.statics.top = async function (user, limit) {
         findQuery = findQuery.limit(+limit);
     }
 
-    return await findQuery.populate(["user"]).exec();
+    return await findQuery.populate("user", "-__v").lean().exec();
 };
 
 homeRunSchema.statics.bottom = async function (user, limit) {
-    let findQuery = this.find().sort("distance -playerOvr");
+    let findQuery = this.find().sort("distance -playerOvr").select("-__v");
 
     if (user) {
         findQuery = findQuery.where({ user });
@@ -48,11 +48,11 @@ homeRunSchema.statics.bottom = async function (user, limit) {
         findQuery = findQuery.limit(+limit);
     }
 
-    return await findQuery.populate(["user"]).exec();
+    return await findQuery.populate("user", "-__v").lean().exec();
 };
 
 homeRunSchema.statics.byId = async function (id) {
-    return await this.findById(id).populate(["user"]).exec();
+    return await this.findById(id).populate(["user"]).lean().exec();
 };
 
 const HomeRun = mongoose.model("HomeRun", homeRunSchema);
